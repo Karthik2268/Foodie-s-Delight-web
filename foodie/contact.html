@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie's Delight - Contact</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="logo">🍽️ Foodie's <span>Delight</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="order.html" id="nav-order">Order <span class="cart-badge" id="nav-badge" style="display:none">0</span></a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="section">
+    <h1 class="section-title">Contact Us</h1>
+    <p class="section-subtitle">We'd love to hear from you!</p>
+    <div class="contact-grid">
+      <div class="contact-card"><div class="icon">📍</div><h4>Address</h4><p>123 Food Street, Flavor Town, India 400001</p></div>
+      <div class="contact-card"><div class="icon">📞</div><h4>Phone</h4><p>+91 98765 43210</p></div>
+      <div class="contact-card"><div class="icon">✉️</div><h4>Email</h4><p>hello@foodiesdelight.com</p></div>
+      <div class="contact-card"><div class="icon">🕐</div><h4>Hours</h4><p>Mon-Sun: 10 AM – 11 PM</p></div>
+    </div>
+    <div class="form-card" style="max-width:600px;margin:0 auto">
+      <form id="contact-form">
+        <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" required></div>
+        <div class="form-group"><label>Your Email</label><input type="email" placeholder="Enter your email" required></div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Write your message here..." required></textarea></div>
+        <button type="submit" class="submit-btn">Send Message ✉️</button>
+      </form>
+      <div id="contact-success" style="display:none;text-align:center;padding:2rem"><p style="font-size:2.5rem">✅</p><h3>Message Sent!</h3><p style="color:var(--text-light)">We'll get back to you soon.</p></div>
+    </div>
+  </div>
+
+  <footer class="footer"><p>© 2025 Foodie's Delight. Made with ❤️</p></footer>
+  <script src="js/cart.js"></script>
+  <script>
+  document.getElementById('contact-form').onsubmit = function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('contact-success').style.display = 'block';
+  };
+  </script>
+</body>
+</html>

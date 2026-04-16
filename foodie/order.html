@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie's Delight - Order</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="logo">🍽️ Foodie's <span>Delight</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="order.html" class="active" id="nav-order">Order <span class="cart-badge" id="nav-badge" style="display:none">0</span></a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="section">
+    <h1 class="section-title">Your Order</h1>
+    <p class="section-subtitle" id="order-subtitle"></p>
+
+    <div id="order-content"></div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Foodie's Delight. Made with ❤️</p>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script>
+  function renderOrderItems() {
+    var content = document.getElementById('order-content');
+    var subtitle = document.getElementById('order-subtitle');
+
+    if (cart.length === 0) {
+      subtitle.textContent = '';
+      content.innerHTML = '<div class="empty-state"><div class="icon">🛒</div><h2>Your cart is empty</h2><p style="color:var(--text-light);margin-bottom:1.5rem">Browse our menu and add your favorite dishes!</p><a href="menu.html" class="btn">← Browse Menu</a></div>';
+      return;
+    }
+
+    subtitle.textContent = getTotalItems() + ' item(s) in your cart';
+    var html = '<div class="order-layout"><div>';
+
+    cart.forEach(function(item) {
+      html += '<div class="order-item">' +
+        '<img src="' + item.image + '" alt="' + item.name + '">' +
+        '<div class="order-item-info">' +
+          '<div style="display:flex;justify-content:space-between;align-items:start">' +
+            '<div><h3>' + item.name + '</h3><span class="price">₹' + item.price + '</span></div>' +
+            '<button class="remove-btn" onclick="removeFromCart(' + item.id + ')" title="Remove">🗑️</button>' +
+          '</div>' +
+          '<div class="qty-controls">' +
+            '<button class="qty-btn" onclick="updateQty(' + item.id + ',-1)">−</button>' +
+            '<span style="font-weight:600;min-width:24px;text-align:center">' + item.qty + '</span>' +
+            '<button class="qty-btn" onclick="updateQty(' + item.id + ',1)">+</button>' +
+            '<span style="margin-left:auto;font-weight:700;font-size:1.1rem">₹' + (item.price * item.qty) + '</span>' +
+          '</div>' +
+        '</div></div>';
+    });
+
+    html += '</div><div><div class="form-card"><h2 style="font-family:Playfair Display,serif;margin-bottom:1.2rem">Delivery Details</h2>' +
+      '<form id="order-form">' +
+        '<div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Enter your name" required></div>' +
+        '<div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="+91 98765 43210" required></div>' +
+        '<div class="form-group"><label>Delivery Address</label><textarea name="address" placeholder="Enter your full address" required></textarea></div>' +
+        '<div class="summary">' +
+          '<div class="summary-row"><span>Subtotal</span><span>₹' + getTotal() + '</span></div>' +
+          '<div class="summary-row"><span>Delivery</span><span style="color:var(--green);font-weight:600">FREE</span></div>' +
+          '<div class="summary-total"><span>Total</span><span class="price">₹' + getTotal() + '</span></div>' +
+        '</div>' +
+        '<br><button type="submit" class="submit-btn">Place Order 🛒</button>' +
+      '</form></div></div></div>';
+
+    content.innerHTML = html;
+    document.getElementById('order-form').onsubmit = function(e) {
+      e.preventDefault();
+      var name = this.name.value;
+      cart = []; saveCart();
+      content.innerHTML = '<div class="confirmation"><div class="check">✅</div><h2>Order Confirmed!</h2><p>Thank you, <strong>' + name + '</strong>! Your order has been placed.</p><p style="color:var(--text-light);margin:1rem 0">We\'ll prepare it with love! 🍽️</p><a href="menu.html" class="btn">Order More</a></div>';
+      subtitle.textContent = '';
+    };
+  }
+  renderOrderItems();
+  </script>
+</body>
+</html>
